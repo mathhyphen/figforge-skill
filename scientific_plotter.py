@@ -30,6 +30,46 @@ except ImportError:
 class ScientificPlotter:
     """Main class for generating scientific figures"""
     
+    def _get_openclaw_default_model(self) -> Optional[str]:
+        """Read OpenClaw config to get default analysis model"""
+        try:
+            # Try to find openclaw.json in common locations
+            possible_paths = [
+                Path.home() / ".openclaw" / "openclaw.json",
+                Path("C:/Users/Administrator/.openclaw/openclaw.json"),
+                Path("/root/.openclaw/openclaw.json"),
+            ]
+            
+            config_path = None
+            for path in possible_paths:
+                if path.exists():
+                    config_path = path
+                    break
+            
+            if not config_path:
+                return None
+            
+            import json
+            with open(config_path, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+            
+            # Get primary model from OpenClaw config
+            primary = config.get('agents', {}).get('defaults', {}).get('model', {}).get('primary', '')
+            
+            # Map OpenClaw model to figforge-compatible model
+            model_mapping = {
+                'kimi-coding/k2p5': 'kimi-k2-5',
+                'zai/glm-4.7': 'glm-4.7',
+                'qwen-portal/coder-model': 'qwen-coder',
+                'google-antigravity/gemini-3-flash': 'gemini-3-pro-preview',
+                'google-antigravity/claude-opus-4-5-thinking': 'claude-opus-4-5',
+            }
+            
+            return model_mapping.get(primary, primary)
+            
+        except Exception:
+            return None
+    
     def __init__(self):
         """Initialize the plotter with API configuration"""
         load_dotenv()
@@ -37,15 +77,15 @@ class ScientificPlotter:
         # Determine API type
         self.api_type = os.getenv("API_TYPE", "gemini").lower()
         
-        # Initialize OpenAI client (used for both analysis and image generation in openai mode)
+        # Initialize OpenAI client (used for analysis with OpenClaw default model)
         self.openai_client = OpenAI(
             base_url=os.getenv("OPENAI_BASE_URL"),
             api_key=os.getenv("OPENAI_API_KEY")
         )
         
-        # Initialize Google Gemini client if needed
+        # Initialize Google Gemini client (used for image generation)
         self.gemini_client = None
-        if self.api_type == "gemini":
+        if self.api_type == "gemini" or True:  # Always init Gemini for image generation
             if not GEMINI_AVAILABLE:
                 raise ImportError(
                     "google-genai package is not installed. " 
@@ -53,11 +93,20 @@ class ScientificPlotter:
                 )
             gemini_api_key = os.getenv("GEMINI_API_KEY")
             if not gemini_api_key:
-                raise ValueError("GEMINI_API_KEY is required when API_TYPE=gemini")
+                raise ValueError("GEMINI_API_KEY is required for image generation")
             self.gemini_client = genai.Client(api_key=gemini_api_key)
         
-        self.analysis_model = os.getenv("ANALYSIS_MODEL", "gemini-3-pro-preview")
+        # Analysis model: Use OpenClaw default if available, fallback to gemini
+        openclaw_model = self._get_openclaw_default_model()
+        default_analysis = openclaw_model if openclaw_model else "gemini-3-pro-preview"
+        
+        self.analysis_model = os.getenv("ANALYSIS_MODEL", default_analysis)
+        # Image model: Always use Gemini for image generation
         self.image_model = os.getenv("IMAGE_MODEL", "gemini-3-pro-image-preview")
+        
+        print(f"🤖 Analysis model: {self.analysis_model}")
+        print(f"🎨 Image model: {self.image_model}")
+        
         self.output_dir = Path(os.getenv("OUTPUT_DIR", "outputs"))
         
         # Create output directory if it doesn't exist
@@ -77,7 +126,7 @@ class ScientificPlotter:
     
     def generate_module_list(self, scientific_text: str) -> str:
         """
-        Step 1: Use GPT-5 to analyze scientific text and generate MODULE LIST
+        Step 1: Use OpenClaw default model to analyze scientific text and generate MODULE LIST
         
         Args:
             scientific_text: The scientific text to analyze
@@ -85,7 +134,7 @@ class ScientificPlotter:
         Returns:
             The generated MODULE LIST as a string
         """
-        print(f"📊 Step 1: Generating MODULE LIST using {self.analysis_model}...")
+        print(f"📊 Step 1: Generating MODULE LIST using {self.analysis_model} (from OpenClaw config)...")
         
         prompt = self.step1_template.format(scientific_text=scientific_text)
         
@@ -97,7 +146,7 @@ class ScientificPlotter:
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.7,
-                max_tokens=8000  # Increased for reasoning models like GPT-5
+                max_tokens=8000
             )
             
             module_list = response.choices[0].message.content
