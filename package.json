@@ -17,16 +17,16 @@
     "research",
     "machine-learning"
   ],
-  "author": "hengzzzhou",
+  "author": "mathhyphen (based on FigForge by hengzzzhou)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hengzzzhou/FigForge"
+    "url": "https://github.com/mathhyphen/figforge-skill"
   },
   "bugs": {
-    "url": "https://github.com/hengzzzhou/FigForge/issues"
+    "url": "https://github.com/mathhyphen/figforge-skill/issues"
   },
-  "homepage": "https://github.com/hengzzzhou/FigForge#readme",
+  "homepage": "https://github.com/mathhyphen/figforge-skill#readme",
   "openclaw": {
     "skillName": "figforge",
     "entryPoint": "scripts/run.py",

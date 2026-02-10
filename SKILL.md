@@ -1,5 +1,6 @@
 ---
 name: figforge
+version: 1.0.0
 description: |
   AI-powered scientific figure generator using GPT-5 and Gemini models.
   Generate publication-quality NeurIPS/ICLR-style scientific figures from research text.

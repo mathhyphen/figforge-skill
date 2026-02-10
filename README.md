@@ -76,23 +76,9 @@ python scripts/run.py -i examples/sample_input.txt
 
 ## 📸 示例
 
-### 示例 1 - 神经网络架构
+### 示例输入 - 神经网络架构
 
 ![sample_input_1.png](output_case/sample_input_1.png)
-
-### 示例 2 - 衰老小鼠大脑白质脆弱性研究 (Cell 2023)
-
-基于 Hahn et al. 发表于 Cell 的研究论文，使用 FigForge 生成的科研图表：
-
-> **论文引用**: Hahn O, Foltz A G, Atkins M, et al. Atlas of the aging mouse brain reveals white matter as vulnerable foci[J]. Cell, 2023, 186(19): 4117-4133. e22.
-
-**图 1 - 白质脆弱性对比**
-![hahn2023_white_matter_vulnerability.jpg](output_case/hahn2023_white_matter_vulnerability.jpg)
-展示年轻 vs 衰老小鼠大脑中白质作为脆弱焦点的转录组学变化。
-
-**图 2 - 空间成像-转录组学方法流程**
-![hahn2023_workflow.jpg](output_case/hahn2023_workflow.jpg)
-三步流程：(1) 数据采集（Micro-MRI + 空间转录组学）→ (2) 共配准 → (3) 分子解码与疾病对比。
 
 ### 更多示例
 
@@ -101,8 +87,6 @@ python scripts/run.py -i examples/sample_input.txt
 - [VIKI-R](https://arxiv.org/abs/2506.09049)
 
 > 所有图表均采用扁平化会议风格设计，线条统一、配色专业。
-> 
-> **注**: Hahn et al. Cell 2023 示例图由 FigForge 基于论文方法描述自动生成，用于展示工具的科研图表生成能力。
 
 ---
 
@@ -138,7 +122,7 @@ Gemini 模型分析科研文本，创建结构化 MODULE LIST，将架构分解�
 
 ```python
 API_TYPE = "gemini"
-GEMINI_API_KEY = "AIzaSyAgDSH-3h6reUvVJ9cxVn2_FQ_DA3LnSdg"
+GEMINI_API_KEY = "YOUR_API_KEY_HERE"  # 请替换为您的 API Key
 ANALYSIS_MODEL = "gemini-3-pro-preview"
 IMAGE_MODEL = "gemini-3-pro-image-preview"
 ```
@@ -263,7 +247,7 @@ python scripts/run.py -i examples/sample_input.txt
 
 ```python
 API_TYPE = "gemini"
-GEMINI_API_KEY = "AIzaSyAgDSH-3h6reUvVJ9cxVn2_FQ_DA3LnSdg"
+GEMINI_API_KEY = "YOUR_API_KEY_HERE"  # Replace with your API Key
 ANALYSIS_MODEL = "gemini-3-pro-preview"
 IMAGE_MODEL = "gemini-3-pro-image-preview"
 ```
@@ -290,7 +274,7 @@ This project is open source under the [MIT License](LICENSE).
 
 ### Acknowledgments
 
-- Original Project: [FigForge](https://github.com/hengzzzhou/FigForge) by [@hengzzzhou](https://github.com/hengzzzhou)
+- Original Project: [FigForge](https://github.com/hengzzzhou/FigForge) by [@hengzzzhou](https://github.com/hengzzhou)
 - OpenClaw Integration: [OpenClaw](https://github.com/openclaw/openclaw)
 - Model Support: Google Gemini 3 Pro Series
 
