@@ -76,9 +76,23 @@ python scripts/run.py -i examples/sample_input.txt
 
 ## 📸 示例
 
-### 示例输入 - 神经网络架构
+### 示例 1 - 神经网络架构
 
 ![sample_input_1.png](output_case/sample_input_1.png)
+
+### 示例 2 - 衰老小鼠大脑白质脆弱性研究 (Cell 2023)
+
+基于 Hahn et al. 发表于 Cell 的研究论文，使用 FigForge 生成的科研图表：
+
+> **论文引用**: Hahn O, Foltz A G, Atkins M, et al. Atlas of the aging mouse brain reveals white matter as vulnerable foci[J]. Cell, 2023, 186(19): 4117-4133. e22.
+
+**图 1 - 白质脆弱性对比**
+![hahn2023_white_matter_vulnerability.jpg](output_case/hahn2023_white_matter_vulnerability.jpg)
+展示年轻 vs 衰老小鼠大脑中白质作为脆弱焦点的转录组学变化。
+
+**图 2 - 空间成像-转录组学方法流程**
+![hahn2023_workflow.jpg](output_case/hahn2023_workflow.jpg)
+三步流程：(1) 数据采集（Micro-MRI + 空间转录组学）→ (2) 共配准 → (3) 分子解码与疾病对比。
 
 ### 更多示例
 
@@ -87,6 +101,8 @@ python scripts/run.py -i examples/sample_input.txt
 - [VIKI-R](https://arxiv.org/abs/2506.09049)
 
 > 所有图表均采用扁平化会议风格设计，线条统一、配色专业。
+>
+> **注**: Hahn et al. Cell 2023 示例图由 FigForge 基于论文方法描述自动生成，用于展示工具的科研图表生成能力。
 
 ---
 
