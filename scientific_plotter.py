@@ -106,10 +106,12 @@ class ScientificPlotter:
                 raise ValueError("GEMINI_API_KEY is required for image generation")
             self.gemini_client = genai.Client(api_key=gemini_api_key)
         
-        # Analysis model: Use Gemini-3-Flash for fast analysis
-        self.analysis_model = os.getenv("ANALYSIS_MODEL", "gemini-3-flash")
-        # Image model: Always use Gemini-3-Pro-Image for high-quality generation
-        self.image_model = os.getenv("IMAGE_MODEL", "gemini-3-pro-image-preview")
+        # Analysis model: Use Gemini-1.5-Flash for fast analysis
+        analysis_env = os.getenv("ANALYSIS_MODEL")
+        self.analysis_model = analysis_env if analysis_env else "gemini-1.5-flash"
+        # Image model: Use Gemini-2.0-Flash-Exp for image generation
+        image_env = os.getenv("IMAGE_MODEL")
+        self.image_model = image_env if image_env else "gemini-2.0-flash-exp"
         
         print(f"Analysis model: {self.analysis_model}")
         print(f"Image model: {self.image_model}")
@@ -133,7 +135,7 @@ class ScientificPlotter:
     
     def generate_module_list(self, scientific_text: str) -> str:
         """
-        Step 1: Use OpenClaw default model to analyze scientific text and generate MODULE LIST
+        Step 1: Use Gemini to analyze scientific text and generate MODULE LIST
         
         Args:
             scientific_text: The scientific text to analyze
@@ -141,22 +143,34 @@ class ScientificPlotter:
         Returns:
             The generated MODULE LIST as a string
         """
-        print(f"Step 1: Generating MODULE LIST using {self.analysis_model} (from OpenClaw config)...")
+        print(f"Step 1: Generating MODULE LIST using {self.analysis_model}...")
         
         prompt = self.step1_template.format(scientific_text=scientific_text)
         
         try:
-            response = self.openai_client.chat.completions.create(
-                model=self.analysis_model,
-                messages=[
-                    {"role": "system", "content": "You are an expert scientific illustrator."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.7,
-                max_tokens=8000
-            )
+            # Use native Gemini API for analysis
+            if self.gemini_client:
+                response = self.gemini_client.models.generate_content(
+                    model=self.analysis_model,
+                    contents=[
+                        {"role": "user", "parts": [{"text": "You are an expert scientific illustrator."}]},
+                        {"role": "user", "parts": [{"text": prompt}]}
+                    ]
+                )
+                module_list = response.text
+            else:
+                # Fallback to OpenAI client
+                response = self.openai_client.chat.completions.create(
+                    model=self.analysis_model,
+                    messages=[
+                        {"role": "system", "content": "You are an expert scientific illustrator."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=0.7,
+                    max_tokens=8000
+                )
+                module_list = response.choices[0].message.content
             
-            module_list = response.choices[0].message.content
             print("MODULE LIST generated successfully!")
             print("\n" + "="*80)
             print("MODULE LIST:")
@@ -358,15 +372,12 @@ class ScientificPlotter:
         module_list = self.generate_module_list(scientific_text)
         
         # Save MODULE LIST for reference
-        if output_path:
-            module_list_path = output_path.with_suffix('.txt')
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        if input_filename:
+            base_name = Path(input_filename).stem
+            module_list_path = self.output_dir / f"{base_name}_module_list_{timestamp}.txt"
         else:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            if input_filename:
-                base_name = Path(input_filename).stem
-                module_list_path = self.output_dir / f"{base_name}_module_list_{timestamp}.txt"
-            else:
-                module_list_path = self.output_dir / f"module_list_{timestamp}.txt"
+            module_list_path = self.output_dir / f"module_list_{timestamp}.txt"
         
         module_list_path.write_text(module_list, encoding="utf-8")
         print(f"MODULE LIST saved to: {module_list_path}\n")
