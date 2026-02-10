@@ -1,0 +1,11 @@
+{
+  "owner": "openclaw",
+  "slug": "figforge",
+  "displayName": "FigForge - AI Scientific Figure Generator",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1739228100000,
+    "commit": "https://github.com/hengzzzhou/FigForge"
+  },
+  "history": []
+}
