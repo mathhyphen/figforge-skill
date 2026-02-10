@@ -35,7 +35,7 @@ class ScientificPlotter:
         load_dotenv()
         
         # Determine API type
-        self.api_type = os.getenv("API_TYPE", "openai").lower()
+        self.api_type = os.getenv("API_TYPE", "gemini").lower()
         
         # Initialize OpenAI client (used for both analysis and image generation in openai mode)
         self.openai_client = OpenAI(
@@ -56,8 +56,8 @@ class ScientificPlotter:
                 raise ValueError("GEMINI_API_KEY is required when API_TYPE=gemini")
             self.gemini_client = genai.Client(api_key=gemini_api_key)
         
-        self.analysis_model = os.getenv("ANALYSIS_MODEL", "gpt-5")
-        self.image_model = os.getenv("IMAGE_MODEL", "gemini-2.5-flash-image")
+        self.analysis_model = os.getenv("ANALYSIS_MODEL", "gemini-3-pro-preview")
+        self.image_model = os.getenv("IMAGE_MODEL", "gemini-3-pro-image-preview")
         self.output_dir = Path(os.getenv("OUTPUT_DIR", "outputs"))
         
         # Create output directory if it doesn't exist
