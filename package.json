@@ -1,0 +1,54 @@
+{
+  "name": "figforge",
+  "version": "1.0.0",
+  "description": "AI-powered scientific figure generator using GPT-5 and Gemini models",
+  "main": "scripts/run.py",
+  "scripts": {
+    "start": "python scripts/run.py",
+    "install-deps": "pip install -r requirements.txt"
+  },
+  "keywords": [
+    "scientific-figures",
+    "ai",
+    "gpt-5",
+    "gemini",
+    "neurips",
+    "visualization",
+    "research",
+    "machine-learning"
+  ],
+  "author": "hengzzzhou",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hengzzzhou/FigForge"
+  },
+  "bugs": {
+    "url": "https://github.com/hengzzzhou/FigForge/issues"
+  },
+  "homepage": "https://github.com/hengzzzhou/FigForge#readme",
+  "openclaw": {
+    "skillName": "figforge",
+    "entryPoint": "scripts/run.py",
+    "pythonVersion": ">=3.8",
+    "envRequired": ["OPENAI_API_KEY"],
+    "envOptional": [
+      "OPENAI_BASE_URL",
+      "GEMINI_API_KEY",
+      "API_TYPE",
+      "ANALYSIS_MODEL",
+      "IMAGE_MODEL",
+      "OUTPUT_DIR"
+    ],
+    "pipPackages": [
+      "openai>=1.0.0",
+      "python-dotenv>=1.0.0",
+      "click>=8.1.0",
+      "pillow>=10.0.0",
+      "requests>=2.31.0"
+    ],
+    "pipOptional": [
+      "google-genai>=0.2.0"
+    ]
+  }
+}
