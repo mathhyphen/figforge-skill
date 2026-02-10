@@ -18,7 +18,7 @@ sys.path.insert(0, str(SKILL_DIR))
 try:
     from scientific_plotter import ScientificPlotter, main as cli_main
 except ImportError as e:
-    print(f"❌ Error importing ScientificPlotter: {e}")
+    print(f"Error importing ScientificPlotter: {e}")
     print(f"   SKILL_DIR: {SKILL_DIR}")
     print(f"   Python path: {sys.path}")
     sys.exit(1)
@@ -30,10 +30,10 @@ def main():
     Delegates to the scientific_plotter CLI.
     """
     # Check for required environment variables
-    if not os.getenv("OPENAI_API_KEY"):
-        print("Warning: OPENAI_API_KEY environment variable is not set.")
+    if not os.getenv("GEMINI_API_KEY"):
+        print("Warning: GEMINI_API_KEY environment variable is not set.")
         print("   Please set it before running:")
-        print("   export OPENAI_API_KEY='your-api-key'")
+        print("   export GEMINI_API_KEY='your-gemini-api-key'")
         print()
     
     # Ensure output directory exists
