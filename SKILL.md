@@ -6,7 +6,7 @@ description: |
   Two modes:
   1. Full workflow: Text → OpenClaw analysis → MODULE LIST → Figure
   2. Image only: MODULE LIST → Figure (uses Gemini image generation)
-version: 2.0.0
+version: 2.1.0
 author: mathhyphen (based on FigForge by hengzzzhou)
 entry: scripts/run_complete.py
 env:

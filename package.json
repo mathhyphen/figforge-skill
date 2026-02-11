@@ -1,6 +1,6 @@
 {
   "name": "figforge",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "OpenClaw-optimized scientific figure generator. Receives MODULE LIST from OpenClaw analysis and creates publication-quality figures using Gemini.",
   "main": "scripts/run.py",
   "scripts": {
@@ -37,7 +37,7 @@
   },
   "openclaw": {
     "skillName": "figforge",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "entryPoint": "scripts/run.py",
     "description": "Image generation skill - receives MODULE LIST from OpenClaw analysis and creates figures",
     "requires": {
