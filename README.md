@@ -4,14 +4,14 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![OpenClaw Skill](https://img.shields.io/badge/OpenClaw-Skill-green.svg)](https://docs.openclaw.ai)
 
-> **OpenClaw-optimized scientific figure generator**
+> **OpenClaw-optimized scientific figure generator (v2.0.0)**
 > 
 > This version is redesigned to work with OpenClaw's analysis models (Kimi/GLM/Qwen).
 > Text analysis → OpenClaw Agent | Image generation → This skill
 
 ---
 
-## 🎯 New Architecture
+## 🎯 New Architecture (v2.0.0)
 
 ```
 Your Scientific Text
@@ -24,7 +24,7 @@ Your Scientific Text
 MODULE LIST (structured description)
         ↓
 ┌─────────────────────────────────┐
-│  FigForge Skill                 │  ← This tool
+│  FigForge Skill (v2.0.0)        │  ← This tool
 │  (MODULE LIST → Figure)         │     Uses Gemini for image generation only
 └─────────────────────────────────┘
         ↓
@@ -132,7 +132,7 @@ See `examples/` for sample MODULE LIST files.
 
 ## 🔄 Comparison: Original vs OpenClaw Version
 
-| Feature | Original FigForge | OpenClaw Version |
+| Feature | Original FigForge (v1) | OpenClaw Version (v2) |
 |---------|-------------------|------------------|
 | Text Analysis | Built-in (GPT-5) | OpenClaw Agent (Kimi/GLM/Qwen) |
 | Image Generation | Gemini | Gemini |
