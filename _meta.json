@@ -14,7 +14,8 @@
   "requirements": {
     "python": ">=3.8",
     "packages": ["google-genai", "python-dotenv", "click"],
-    "env": ["GEMINI_API_KEY"]
+    "env": ["GEMINI_API_KEY"],
+    "model": "models/gemini-3-pro-image-preview"
   },
   "workflow": {
     "input": "MODULE LIST (from OpenClaw analysis)",
