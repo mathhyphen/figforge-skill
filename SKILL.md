@@ -1,246 +1,175 @@
 ---
 name: figforge
-version: 1.0.0
 description: |
-  AI-powered scientific figure generator using GPT-5 and Gemini models.
-  Generate publication-quality NeurIPS/ICLR-style scientific figures from research text.
-metadata: {
-  "openclaw": {
-    "emoji": "🎨",
-    "requires": {
-      "bins": ["python3"],
-      "python": ["openai>=1.0.0", "python-dotenv>=1.0.0", "click>=8.1.0", "pillow>=10.0.0", "requests>=2.31.0"],
-      "optional_python": ["google-genai>=0.2.0"]
-    },
-    "env": ["OPENAI_API_KEY"],
-    "optionalEnv": ["OPENAI_BASE_URL", "GEMINI_API_KEY", "API_TYPE", "ANALYSIS_MODEL", "IMAGE_MODEL", "OUTPUT_DIR"]
-  }
-}
+  Scientific figure generator - Image generation component.
+  Receives MODULE LIST from OpenClaw analysis and creates publication-quality figures.
+  
+  Workflow:
+  1. OpenClaw Agent (Kimi/GLM/Qwen) analyzes text → generates MODULE LIST
+  2. This skill receives MODULE LIST → generates figure using Gemini image model
+version: 2.0.0
+author: mathhyphen (based on FigForge by hengzzzhou)
+entry: scripts/run.py
+env:
+  required:
+    - GEMINI_API_KEY
+  optional:
+    - IMAGE_MODEL
+    - OUTPUT_DIR
 ---
 
-# FigForge - AI Scientific Figure Generator 🎨
+# FigForge - Image Generation Skill
 
-Generate publication-quality scientific figures using AI models with a sophisticated two-step workflow:
+Generate publication-quality scientific figures from pre-analyzed MODULE LIST.
 
-1. **GPT-5** analyzes your scientific text and generates a structured MODULE LIST
-2. **Gemini-2.5-flash-image** creates a professional figure based on the MODULE LIST
+## Workflow
 
-Perfect for creating NeurIPS/ICLR-style scientific figures for research papers.
+Unlike the original FigForge, this OpenClaw Skill is designed to work with OpenClaw's 
+default analysis models (Kimi K2.5, GLM-4.7, Qwen, etc.):
 
-## Features
+```
+Your Scientific Text
+        ↓
+OpenClaw Agent Analysis (Kimi/GLM/Qwen)
+        ↓
+MODULE LIST (structured description)
+        ↓
+FigForge Skill (this tool)
+        ↓
+Publication-Quality Figure
+```
 
-- 🤖 **Integrated AI Workflow**: GPT-5 analysis guides image generation for optimal results
-- 📊 **Publication-Ready**: Generates clean, NeurIPS-style scientific figures
-- 🎯 **Structured Approach**: Two-step process ensures logical, accurate visualizations
-- 🔧 **Flexible Configuration**: Support for OpenAI-compatible and native Google Gemini APIs
-- 💾 **Automatic Saving**: Saves both MODULE LIST and generated figures
-- 🖥️ **Multiple Input Methods**: File-based or direct text input
+## Prerequisites
 
-## Quick Start
+1. **Generate MODULE LIST first** using OpenClaw:
+   ```
+   @coder Analyze this text and create a MODULE LIST for figure generation:
+   [your scientific text here]
+   ```
 
-### 1. Configure Environment
+2. **Save the MODULE LIST** to a file (e.g., `module_list.txt`)
 
-Create a `.env` file or set environment variables:
+3. **Run this skill** to generate the figure
+
+## Usage
+
+### Basic Usage
 
 ```bash
-# Required
-export OPENAI_API_KEY="your-openai-api-key"
-
-# Optional (default: OpenAI-compatible endpoint)
-export OPENAI_BASE_URL="https://your-endpoint.com/v1"
-export API_TYPE="openai"  # or "gemini"
-
-# Optional (for native Gemini API)
+# Set Gemini API Key (required for image generation)
 export GEMINI_API_KEY="your-gemini-api-key"
 
-# Model settings
-export ANALYSIS_MODEL="gpt-5"
-export IMAGE_MODEL="gemini-2.5-flash-image"
-
-# Output directory
-export OUTPUT_DIR="outputs"
+# Generate figure from MODULE LIST
+python scripts/run.py -m module_list.txt
 ```
 
-### 2. Generate a Figure
-
-#### From a text file:
-```bash
-python {baseDir}/scripts/run.py -i path/to/your/scientific-text.txt
-```
-
-#### From direct text:
-```bash
-python {baseDir}/scripts/run.py -t "Your scientific text describing your model architecture..."
-```
-
-#### Specify custom output:
-```bash
-python {baseDir}/scripts/run.py -i input.txt -o my_figure.png
-```
-
-#### Generate MODULE LIST only:
-```bash
-python {baseDir}/scripts/run.py -i input.txt --module-list-only
-```
-
-## Usage Examples
-
-### Example 1: Neural Network Architecture
+### With Custom Output Path
 
 ```bash
-python {baseDir}/scripts/run.py -t "We propose a transformer-based model with multi-head self-attention, layer normalization, and a feed-forward network. The model takes text embeddings as input and passes them through 6 encoder layers."
+python scripts/run.py -m module_list.txt -o my_figure.png
 ```
 
-### Example 2: Vision Model
+### Specify Image Model
 
 ```bash
-python {baseDir}/scripts/run.py -i vision_model_description.txt -o architecture_diagram.png
+python scripts/run.py -m module_list.txt --image-model gemini-2.0-flash-exp-image-generation
 ```
 
-### Example 3: Research Method Pipeline
+## Environment Variables
 
-```bash
-python {baseDir}/scripts/run.py -t "Our method consists of three stages: data preprocessing with augmentation, feature extraction using a pre-trained CNN, and classification with a multi-layer perceptron."
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `GEMINI_API_KEY` | ✅ Yes | - | Google Gemini API key for image generation |
+| `IMAGE_MODEL` | ❌ No | `gemini-2.0-flash-exp-image-generation` | Image generation model |
+| `OUTPUT_DIR` | ❌ No | `outputs` | Output directory for generated figures |
+
+## MODULE LIST Format
+
+The MODULE LIST should be a structured text description containing:
+
+1. **Figure Goal and Type**: What the figure illustrates
+2. **Main Subjects/Inputs**: Key elements to visualize
+3. **Processes/Methods/Stages**: Workflow steps
+4. **Relationships and Flow**: How elements connect
+5. **Outputs/Readouts/Results**: Expected visualizations
+6. **Layout and Visual Style**: Design specifications
+7. **Text Labels and Annotations**: Labels and descriptions
+8. **Final Prompt**: Complete generation prompt
+
+Example MODULE LIST structure:
+```
+MODULE LIST:
+
+1. Figure Goal and Type:
+   - Compare traditional vs proposed methods
+   - Conceptual workflow diagram
+
+2. Main Subjects / Inputs:
+   - Input A: Description...
+   - Input B: Description...
+
+[... sections 3-7 ...]
+
+8. Final Nano Banana Prompt:
+   Create a scientific figure showing...
 ```
 
-## API Configuration
+## Integration with OpenClaw
 
-### Option 1: OpenAI-Compatible API (Default)
+### As OpenClaw Skill
 
-```bash
-export API_TYPE="openai"
-export OPENAI_BASE_URL="https://your-relay-endpoint.com/v1"
-export OPENAI_API_KEY="your-api-key"
+```yaml
+# In your OpenClaw agent config
+skills:
+  figforge:
+    entry: scripts/run.py
+    env:
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      OUTPUT_DIR: D:\vibe_coding\figures
 ```
 
-This uses a unified OpenAI-compatible endpoint for both analysis (GPT-5) and image generation (Gemini-2.5-flash-image).
+### Manual Integration
 
-### Option 2: Native Google Gemini API
+1. Ask OpenClaw Agent to analyze your text:
+   ```
+   "Please analyze this methodology section and create a detailed 
+    MODULE LIST for generating a scientific figure. Include all 8 
+    sections: goal, subjects, processes, relationships, outputs, 
+    layout, labels, and final prompt."
+   ```
 
-```bash
-export API_TYPE="gemini"
-export OPENAI_BASE_URL="https://your-openai-endpoint.com/v1"
-export OPENAI_API_KEY="your-openai-api-key"
-export GEMINI_API_KEY="your-gemini-api-key"
-```
+2. Save the output to `module_list.txt`
 
-When using `API_TYPE=gemini`:
-- MODULE LIST generation uses the OpenAI-compatible API
-- Image generation uses the native Google Gemini API
+3. Run FigForge:
+   ```bash
+   python scripts/run.py -m module_list.txt
+   ```
 
-## Command-Line Options
+## Advantages of This Design
 
-| Option | Short | Description |
-|--------|-------|-------------|
-| `--input FILE` | `-i` | Path to input text file |
-| `--text TEXT` | `-t` | Scientific text as string |
-| `--output FILE` | `-o` | Custom output path |
-| `--module-list-only` | | Generate MODULE LIST without creating the figure |
-| `--help` | `-h` | Show help message |
-
-## Output Files
-
-When generating a figure, the following files are created:
-
-1. **Figure**: `{input_name}_{timestamp}.png` - The generated scientific figure
-2. **MODULE LIST**: `{input_name}_module_list_{timestamp}.txt` - Structured breakdown of the architecture
-
-Example:
-```
-outputs/
-├── sample_input_20250211_021522.png        # Generated figure
-└── sample_input_module_list_20250211_021522.txt  # MODULE LIST
-```
-
-## How It Works
-
-### Step 1: MODULE LIST Generation
-
-The GPT-5 model analyzes your scientific text and creates a structured MODULE LIST:
-
-```
-Input(s): Data sources and preprocessing
-Preprocessing/Encoding/Embedding: Feature extraction layers
-Core Architecture/Stages/Blocks: Main model components in sequence
-Special Mechanisms: Attention, memory, routing, etc.
-Output Head: Final prediction layers
-```
-
-### Step 2: Figure Generation
-
-Using the MODULE LIST as a guide, the image model generates a clean, professional figure following:
-
-- ✅ Flat, clean conference style (no gradients, shadows)
-- ✅ Consistent thin line weights
-- ✅ Professional pastel color palette
-- ✅ Rounded rectangles for module blocks
-- ✅ Clear arrows indicating data flow
-- ✅ Concise labels (no long sentences)
-- ✅ Pure white background with clean spacing
-
-## Tips for Best Results
-
-1. **Provide Clear Text**: The more detailed and structured your input text, the better the MODULE LIST
-2. **Describe Flow**: Explicitly mention data flow and connections between components
-3. **Specify Components**: Name specific layers, blocks, or mechanisms in your architecture
-4. **Review MODULE LIST**: Check the generated MODULE LIST before proceeding to figure generation
-5. **Iterate**: You can regenerate figures with modified MODULE LIST for fine-tuning
+1. **Model Flexibility**: Use OpenClaw's best analysis model (Kimi/GLM/Qwen) for text understanding
+2. **Cost Efficiency**: Text analysis can use cheaper/faster models
+3. **Specialized Generation**: Only use Gemini for what it does best - image generation
+4. **Iterative Refinement**: Can refine MODULE LIST before committing to image generation
 
 ## Troubleshooting
 
-### Error: "OPENAI_API_KEY is required"
-**Solution**: Set the `OPENAI_API_KEY` environment variable
+**Error: "GEMINI_API_KEY not set"**
+- Set your Gemini API key: `export GEMINI_API_KEY="your-key"`
 
-### Error: "Prompt template not found"
-**Solution**: Ensure the `prompts/` directory exists with template files
+**Error: "Module list file not found"**
+- Ensure the MODULE LIST file path is correct
+- Generate MODULE LIST first using OpenClaw analysis
 
-### Error: "google-genai package is not installed"
-**Solution**: Install optional dependencies: `pip install google-genai`
-
-### Image generation fails
-**Solution**: Check that your API endpoint supports the specified image model
-
-## Dependencies
-
-### Required
-- Python 3.8+
-- openai >= 1.0.0
-- python-dotenv >= 1.0.0
-- click >= 8.1.0
-- pillow >= 10.0.0
-- requests >= 2.31.0
-
-### Optional (for native Gemini API)
-- google-genai >= 0.2.0
-
-## Advanced Configuration
-
-All settings can be configured via environment variables:
-
-```bash
-# API Configuration
-OPENAI_API_KEY="your-key"
-OPENAI_BASE_URL="https://api.openai.com/v1"
-GEMINI_API_KEY="your-gemini-key"  # Only when API_TYPE=gemini
-API_TYPE="openai"  # or "gemini"
-
-# Model Selection
-ANALYSIS_MODEL="gpt-5"
-IMAGE_MODEL="gemini-2.5-flash-image"
-
-# Output
-OUTPUT_DIR="outputs"
-```
+**Poor image quality**
+- Refine the MODULE LIST with more detailed descriptions
+- Ensure section 8 (Final Prompt) is comprehensive
 
 ## License
 
-MIT License - See [LICENSE](LICENSE) for details.
+MIT License - See LICENSE for details.
 
 ## Credits
 
-- Original repository: [FigForge](https://github.com/hengzzzhou/FigForge)
-- Powered by OpenAI-compatible API endpoints and Google Gemini
-
----
-
-**Happy Scientific Plotting! 🎨✨**
+- Original FigForge: [hengzzzhou/FigForge](https://github.com/hengzzzhou/FigForge)
+- OpenClaw Integration: mathhyphen
