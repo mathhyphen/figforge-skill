@@ -1,15 +1,14 @@
 ---
 name: figforge
 description: |
-  Scientific figure generator - Image generation component.
-  Receives MODULE LIST from OpenClaw analysis and creates publication-quality figures.
+  Scientific figure generator for OpenClaw.
   
-  Workflow:
-  1. OpenClaw Agent (Kimi/GLM/Qwen) analyzes text → generates MODULE LIST
-  2. This skill receives MODULE LIST → generates figure using Gemini image model
+  Two modes:
+  1. Full workflow: Text → OpenClaw analysis → MODULE LIST → Figure
+  2. Image only: MODULE LIST → Figure (uses Gemini image generation)
 version: 2.0.0
 author: mathhyphen (based on FigForge by hengzzzhou)
-entry: scripts/run.py
+entry: scripts/run_complete.py
 env:
   required:
     - GEMINI_API_KEY
@@ -18,158 +17,145 @@ env:
     - OUTPUT_DIR
 ---
 
-# FigForge - Image Generation Skill
+# FigForge - Scientific Figure Generator
 
-Generate publication-quality scientific figures from pre-analyzed MODULE LIST.
+Generate publication-quality scientific figures for OpenClaw.
 
-## Workflow
+## 🎯 Two Usage Modes
 
-Unlike the original FigForge, this OpenClaw Skill is designed to work with OpenClaw's 
-default analysis models (Kimi K2.5, GLM-4.7, Qwen, etc.):
+### Mode 1: Full Workflow (Recommended)
 
-```
-Your Scientific Text
-        ↓
-OpenClaw Agent Analysis (Kimi/GLM/Qwen)
-        ↓
-MODULE LIST (structured description)
-        ↓
-FigForge Skill (this tool)
-        ↓
-Publication-Quality Figure
+**Text → Analysis → Figure** (in one command)
+
+```bash
+# Analyzes text using OpenClaw agent, then generates figure
+python scripts/run_complete.py -i input.txt -o figure.png
 ```
 
-## Prerequisites
+### Mode 2: Image Generation Only
 
-1. **Generate MODULE LIST first** using OpenClaw:
+**MODULE LIST → Figure** (if you already have MODULE LIST)
+
+```bash
+# Generate figure from pre-generated MODULE LIST
+python scripts/run.py -m module_list.txt -o figure.png
+```
+
+---
+
+## 🚀 Quick Start
+
+### Direct Usage with OpenClaw
+
+```bash
+# Let OpenClaw handle everything
+openclaw run figforge -i my_paper.txt -o figure.png
+```
+
+### Step-by-Step
+
+1. **Prepare your text** (scientific description)
+2. **Run FigForge**:
+   ```bash
+   export GEMINI_API_KEY="your-key"
+   python scripts/run_complete.py -i my_text.txt
    ```
-   @coder Analyze this text and create a MODULE LIST for figure generation:
-   [your scientific text here]
-   ```
+3. **Get your figure** in `outputs/` directory
 
-2. **Save the MODULE LIST** to a file (e.g., `module_list.txt`)
+---
 
-3. **Run this skill** to generate the figure
+## 📋 Usage Examples
 
-## Usage
-
-### Basic Usage
+### Example 1: Full Workflow
 
 ```bash
-# Set Gemini API Key (required for image generation)
-export GEMINI_API_KEY="your-gemini-api-key"
-
-# Generate figure from MODULE LIST
-python scripts/run.py -m module_list.txt
+# Input: Raw scientific text
+# Output: Generated figure
+python scripts/run_complete.py -i methodology.txt -o results/figure1.png
 ```
 
-### With Custom Output Path
+### Example 2: With Custom Model
 
 ```bash
-python scripts/run.py -m module_list.txt -o my_figure.png
+python scripts/run_complete.py -i input.txt --image-model gemini-2.0-flash-exp-image-generation
 ```
 
-### Specify Image Model
+### Example 3: Using Pre-generated MODULE LIST
 
 ```bash
-python scripts/run.py -m module_list.txt --image-model gemini-2.0-flash-exp-image-generation
+# If you already have MODULE LIST from previous analysis
+python scripts/run.py -m module_list.txt -o figure.png
 ```
 
-## Environment Variables
+---
+
+## 🔧 Environment Variables
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `GEMINI_API_KEY` | ✅ Yes | - | Google Gemini API key for image generation |
-| `IMAGE_MODEL` | ❌ No | `gemini-2.0-flash-exp-image-generation` | Image generation model |
-| `OUTPUT_DIR` | ❌ No | `outputs` | Output directory for generated figures |
+| `GEMINI_API_KEY` | ✅ Yes | - | Google Gemini API key |
+| `IMAGE_MODEL` | ❌ No | `gemini-2.0-flash-exp-image-generation` | Image model |
+| `OUTPUT_DIR` | ❌ No | `outputs` | Output directory |
 
-## MODULE LIST Format
+---
 
-The MODULE LIST should be a structured text description containing:
+## 📝 How It Works
 
-1. **Figure Goal and Type**: What the figure illustrates
-2. **Main Subjects/Inputs**: Key elements to visualize
-3. **Processes/Methods/Stages**: Workflow steps
-4. **Relationships and Flow**: How elements connect
-5. **Outputs/Readouts/Results**: Expected visualizations
-6. **Layout and Visual Style**: Design specifications
-7. **Text Labels and Annotations**: Labels and descriptions
-8. **Final Prompt**: Complete generation prompt
+### Full Workflow (run_complete.py)
 
-Example MODULE LIST structure:
 ```
-MODULE LIST:
-
-1. Figure Goal and Type:
-   - Compare traditional vs proposed methods
-   - Conceptual workflow diagram
-
-2. Main Subjects / Inputs:
-   - Input A: Description...
-   - Input B: Description...
-
-[... sections 3-7 ...]
-
-8. Final Nano Banana Prompt:
-   Create a scientific figure showing...
+Your Text
+    ↓
+OpenClaw Agent (Kimi/GLM/Qwen) - Analysis
+    ↓
+MODULE LIST
+    ↓
+Gemini Image Generation
+    ↓
+Figure
 ```
 
-## Integration with OpenClaw
+### Image Only Mode (run.py)
 
-### As OpenClaw Skill
-
-```yaml
-# In your OpenClaw agent config
-skills:
-  figforge:
-    entry: scripts/run.py
-    env:
-      GEMINI_API_KEY: ${GEMINI_API_KEY}
-      OUTPUT_DIR: D:\vibe_coding\figures
+```
+MODULE LIST (pre-generated)
+    ↓
+Gemini Image Generation
+    ↓
+Figure
 ```
 
-### Manual Integration
+---
 
-1. Ask OpenClaw Agent to analyze your text:
-   ```
-   "Please analyze this methodology section and create a detailed 
-    MODULE LIST for generating a scientific figure. Include all 8 
-    sections: goal, subjects, processes, relationships, outputs, 
-    layout, labels, and final prompt."
-   ```
+## 🎨 What is MODULE LIST?
 
-2. Save the output to `module_list.txt`
+A structured description with 8 sections:
+1. Figure Goal and Type
+2. Main Subjects/Inputs
+3. Processes/Methods/Stages
+4. Relationships and Flow
+5. Outputs/Readouts/Results
+6. Layout and Visual Style
+7. Text Labels and Annotations
+8. Final Prompt
 
-3. Run FigForge:
-   ```bash
-   python scripts/run.py -m module_list.txt
-   ```
+See `examples/` for samples.
 
-## Advantages of This Design
+---
 
-1. **Model Flexibility**: Use OpenClaw's best analysis model (Kimi/GLM/Qwen) for text understanding
-2. **Cost Efficiency**: Text analysis can use cheaper/faster models
-3. **Specialized Generation**: Only use Gemini for what it does best - image generation
-4. **Iterative Refinement**: Can refine MODULE LIST before committing to image generation
+## 🔍 Troubleshooting
 
-## Troubleshooting
+**"No input provided"**
+→ Use `-i` for text file or `-m` for module list file
 
-**Error: "GEMINI_API_KEY not set"**
-- Set your Gemini API key: `export GEMINI_API_KEY="your-key"`
+**"GEMINI_API_KEY not set"**
+→ Set your API key: `export GEMINI_API_KEY="your-key"`
 
-**Error: "Module list file not found"**
-- Ensure the MODULE LIST file path is correct
-- Generate MODULE LIST first using OpenClaw analysis
+**"Input needs analysis"**
+→ The tool detected raw text. It will show you a prompt to run in OpenClaw first.
 
-**Poor image quality**
-- Refine the MODULE LIST with more detailed descriptions
-- Ensure section 8 (Final Prompt) is comprehensive
+---
 
-## License
+## 📄 License
 
-MIT License - See LICENSE for details.
-
-## Credits
-
-- Original FigForge: [hengzzzhou/FigForge](https://github.com/hengzzzhou/FigForge)
-- OpenClaw Integration: mathhyphen
+MIT License

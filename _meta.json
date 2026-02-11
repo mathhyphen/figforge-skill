@@ -1,12 +1,13 @@
 {
   "owner": "openclaw",
   "slug": "figforge",
-  "displayName": "FigForge - Image Generation Skill",
-  "description": "Scientific figure generator for OpenClaw. Receives MODULE LIST from analysis models and creates publication-quality figures using Gemini.",
-  "version": "2.0.0",
+  "displayName": "FigForge - Scientific Figure Generator",
+  "description": "Scientific figure generator for OpenClaw. Supports both full workflow (text → analysis → figure) and image-only mode (MODULE LIST → figure).",
+  "version": "2.1.0",
+  "entry": "scripts/run_complete.py",
   "latest": {
-    "version": "2.0.0",
-    "publishedAt": 1739251200000,
+    "version": "2.1.0",
+    "publishedAt": 1739254800000,
     "commit": "https://github.com/mathhyphen/figforge-skill"
   },
   "tags": ["scientific-figures", "visualization", "gemini", "image-generation", "openclaw"],
@@ -20,6 +21,16 @@
     "output": "Publication-quality figure (PNG)"
   },
   "history": [
+    {
+      "version": "2.1.0",
+      "date": "2026-02-11",
+      "changes": [
+        "Add run_complete.py for full workflow support",
+        "Text → OpenClaw analysis → MODULE LIST → Figure",
+        "Backward compatible with MODULE LIST only mode",
+        "Updated entry point to run_complete.py"
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "2026-02-11",
