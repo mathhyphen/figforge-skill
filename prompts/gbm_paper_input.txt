@@ -1,0 +1,31 @@
+# GBM Multimodal Research Background
+
+## Research Timeline
+Create a timeline figure showing the evolution of GBM research from 2010 to present:
+- 2010: TCGA classification - four transcriptional subtypes identified
+- 2010s: Single-cell RNA sequencing reveals multiple transcriptional states
+- 2021: WHO CNS5 update with key molecular markers (TERT, EGFR, MGMT)
+- Recent: Neftel et al. characterized four cellular subgroups
+- Current: Multi-modal integration era (Imaging + Pathology + Molecular)
+
+Style: Scientific publication quality, clean timeline with colored nodes, professional medical research aesthetic.
+
+## Three Methodological Challenges
+Create a diagram showing three parallel challenges:
+1. Cross-scale Semantic Alignment (Macro Imaging vs Micro Molecular)
+2. Heterogeneous Missing Data Imputation (Complete vs Incomplete data)
+3. Interpretable Validation (Black Box to White Box)
+
+Style: Three-column layout with icons, arrows showing problem flow, modern scientific illustration.
+
+## Multi-modal Hierarchy
+Create a three-layer hierarchical diagram:
+- Layer 1 (Top): Macro/Anatomy - MRI, CT, tumor morphology
+- Layer 2 (Middle): Meso/Cellular - Histopathology, H&E, IHC
+- Layer 3 (Bottom): Micro/Molecular - Genomics, TERT, EGFR, MGMT
+
+Show bidirectional arrows between layers indicating influence relationships.
+
+Style: Layered visualization with distinct colors (blue for macro, green for meso, purple for micro), clean connecting arrows.
+
+OUTPUT_FORMAT: PNG, 300 DPI, publication-ready for academic paper

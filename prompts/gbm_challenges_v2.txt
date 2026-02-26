@@ -1,0 +1,24 @@
+Scientific illustration: Three methodological challenges in GBM multimodal research
+
+CHALLENGE 1 - Cross-scale Semantic Alignment:
+Left panel shows brain MRI scans with tumor highlighted in blue (macro scale)
+Right panel shows DNA helix and gene expression heatmap in green (micro scale)
+Center shows broken connection with red X marking the semantic gap
+Small text: Shallow concatenation fails to bridge scales
+
+CHALLENGE 2 - Heterogeneous Missing Data:
+Top row: Three complete icons - MRI scan, pathology slide, molecular data - all with green checkmarks
+Bottom row: Incomplete scenario - MRI with check, pathology with red X, molecular with question mark
+Arrow showing imputation attempt, with warning that naive methods destroy patterns
+
+CHALLENGE 3 - Interpretable Validation:
+Left: Dark neural network layers labeled "Black Box AI" with lock symbol
+Right: Transparent network with attention heatmaps on brain MRI and highlighted pathology regions labeled "White Box Explainable AI"
+
+BOTTOM SOLUTION BANNER:
+Purple gradient banner with text "Self-supervised Learning with Gated Multimodal Fusion"
+Three icons: attention mechanism, missing data handler, explanation module
+
+STYLE: Clean modern scientific illustration, three horizontal sections, distinct color themes (blue-green for Challenge 1, orange-red for Challenge 2, black-white for Challenge 3, purple for solution), publication quality, white background, professional medical research aesthetic
+
+TITLE: "Three Methodological Challenges in GBM Multi-modal Integration"

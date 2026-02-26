@@ -1,0 +1,82 @@
+{
+  "owner": "mathhyphen",
+  "slug": "figforge",
+  "displayName": "FigForge - Scientific Figure Generator with Style Transfer",
+  "description": "Generate publication-quality scientific figures with style transfer support. Match styles from reference images for consistent figures across papers.",
+  "version": "3.0.0",
+  "entry": "scripts/run_complete.py",
+  "latest": {
+    "version": "3.0.0",
+    "publishedAt": 1740537600000,
+    "commit": "https://github.com/mathhyphen/figforge-skill"
+  },
+  "tags": [
+    "scientific-figures",
+    "visualization",
+    "gemini",
+    "image-generation",
+    "openclaw",
+    "style-transfer"
+  ],
+  "requirements": {
+    "python": ">=3.8",
+    "packages": [
+      "google-genai>=0.2.0",
+      "python-dotenv>=1.0.0",
+      "click>=8.1.0",
+      "pillow>=10.0.0"
+    ],
+    "env": ["GEMINI_API_KEY"],
+    "model": "gemini-2.0-flash-exp-image-generation"
+  },
+  "features": [
+    "Text-to-figure generation",
+    "MODULE LIST based generation",
+    "Style transfer from reference images",
+    "Strict style matching mode",
+    "Blended style mode (reference + academic)",
+    "Color palette extraction",
+    "Automatic style analysis"
+  ],
+  "cli": {
+    "basic": "python scripts/run_complete.py -i input.txt",
+    "with_style": "python scripts/run_complete.py -i input.txt -r reference.png",
+    "blend_mode": "python scripts/run_complete.py -i input.txt -r reference.png --blend"
+  },
+  "workflow": {
+    "input": "Text or MODULE LIST",
+    "reference": "Optional: Reference image for style transfer",
+    "output": "Publication-quality figure (PNG)"
+  },
+  "history": [
+    {
+      "version": "3.0.0",
+      "date": "2026-02-26",
+      "changes": [
+        "NEW: Style transfer from reference images",
+        "NEW: StyleExtractor for automatic style analysis",
+        "NEW: Two modes - strict and blend",
+        "NEW: Color palette extraction",
+        "Improved: Better prompt templates",
+        "Improved: Enhanced CLI with style options"
+      ]
+    },
+    {
+      "version": "2.1.0",
+      "date": "2026-02-11",
+      "changes": [
+        "Add run_complete.py for full workflow support",
+        "Text → OpenClaw analysis → MODULE LIST → Figure",
+        "Backward compatible with MODULE LIST only mode"
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "2026-02-11",
+      "changes": [
+        "Redesigned for OpenClaw integration",
+        "Focus on image generation"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "name": "figforge",
+  "version": "2.1.0",
+  "description": "OpenClaw-optimized scientific figure generator. Receives MODULE LIST from OpenClaw analysis and creates publication-quality figures using Gemini.",
+  "main": "scripts/run.py",
+  "scripts": {
+    "start": "python scripts/run.py",
+    "test": "echo 'Run: python scripts/run.py -m examples/module_list_sample.txt'"
+  },
+  "keywords": [
+    "scientific-figures",
+    "ai",
+    "gemini",
+    "neurips",
+    "visualization",
+    "research",
+    "openclaw",
+    "image-generation"
+  ],
+  "author": "mathhyphen (OpenClaw adaptation of FigForge by hengzzzhou)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mathhyphen/figforge-skill"
+  },
+  "bugs": {
+    "url": "https://github.com/mathhyphen/figforge-skill/issues"
+  },
+  "homepage": "https://github.com/mathhyphen/figforge-skill#readme",
+  "dependencies": {
+    "python": ">=3.8",
+    "packages": [
+      "google-genai>=0.2.0",
+      "python-dotenv>=1.0.0",
+      "click>=8.1.0"
+    ]
+  },
+  "openclaw": {
+    "skillName": "figforge",
+    "version": "2.1.0",
+    "entryPoint": "scripts/run.py",
+    "description": "Image generation skill - receives MODULE LIST from OpenClaw analysis and creates figures",
+    "requires": {
+      "env": ["GEMINI_API_KEY"],
+      "optional_env": ["IMAGE_MODEL", "OUTPUT_DIR"]
+    },
+    "workflow": {
+      "step1": "OpenClaw Agent analyzes text → generates MODULE LIST",
+      "step2": "This skill receives MODULE LIST → generates figure"
+    }
+  }
+}

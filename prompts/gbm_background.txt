@@ -1,0 +1,20 @@
+# Fig 1: GBM Research Background Timeline
+# 研究背景：GBM多模态研究发展历程时间线
+
+MODULE: timeline
+
+STYLE: scientific, medical, clean
+
+TITLE: "GBM Multimodal Research Development Timeline"
+
+CONTENT:
+- 2010: TCGA Classification - Four transcriptional subtypes of GBM identified
+- 2010s: Single-cell RNA sequencing reveals multiple transcriptional states
+- Neftel et al.: Four cellular subgroups characterized
+- 2021: WHO CNS5 Classification - Key molecular markers: TERT, EGFR, MGMT
+- Recent: Multi-modal data integration emerges as new paradigm
+- Current: Imaging-Pathology-Molecular integration for precision prognosis
+
+COLOR_SCHEME: medical_blue, professional
+
+OUTPUT: research_background_timeline.png

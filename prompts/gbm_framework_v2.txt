@@ -1,0 +1,19 @@
+Research framework diagram for GBM study showing three sections:
+
+LEFT - Current Challenges (Red theme):
+Three icons: Broken MRI-molecular link, incomplete data matrix, locked black box AI
+Label: Clinical Reality & Bottlenecks
+
+CENTER - Four Research Modules (Flowing pipeline):
+1. Semantic Alignment: Medical LLM fusing MRI + Pathology + Molecular into unified space
+2. Missing Data Completion: Rectified Flow generating virtual biopsy data
+3. Explainable Prediction: Cross-modal Transformer with attention maps
+4. Clinical Validation: Multi-center retrospective + prospective testing
+Connect with large arrows showing workflow
+
+RIGHT - Research Outcomes (Green theme):
+Precision Prognosis, Clinical Decision Support, Paradigm Shift
+Label: From Experience-Driven to AI-Powered Oncology
+
+Style: Clean scientific framework, distinct colors per section, publication quality, white background
+Title: Research Framework for GBM Multi-modal Integration

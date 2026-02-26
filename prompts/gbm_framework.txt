@@ -1,0 +1,53 @@
+Create a comprehensive research framework diagram showing the pipeline from current challenges to research objectives for GBM multimodal integration study:
+
+TOP SECTION - CURRENT STATUS (Left side, red/orange warning theme):
+Title: "Clinical Reality & Methodological Bottlenecks"
+Three challenge boxes with warning icons:
+1. Cross-scale Semantic Gap: MRI scan disconnected from molecular data, broken link symbol
+2. Heterogeneous Missing Data: Incomplete data matrix with missing cells highlighted in red
+3. Black Box AI: Neural network with lock symbol, no transparency
+Bottom text: "Current approaches fail to bridge clinical translation gap"
+
+MIDDLE SECTION - FOUR RESEARCH MODULES (Center, flowing pipeline design):
+Large horizontal arrow connecting four modules left to right:
+
+MODULE 1: Semantic Alignment (Blue theme)
+- Input: Multi-modal raw data (MRI brain icon, pathology slide, DNA helix)
+- Process: Medical LLM with semantic anchors, domain foundation model fine-tuning
+- Output: Unified semantic embedding space
+- Visual: Three data streams converging into shared representation sphere
+
+MODULE 2: Missing Data Completion (Green theme)
+- Input: Incomplete multi-modal data with missing indicators
+- Process: Rectified Flow generative framework with prototype guidance
+- Output: Virtual biopsy - completed data matrix
+- Visual: Flow model generating missing data, "heterogeneity-aware" label
+
+MODULE 3: Explainable Prediction (Purple theme)
+- Input: Aligned and completed multi-modal features
+- Process: Cross-modal Transformer with causal interpretability analysis
+- Output: White box prediction with attention maps
+- Visual: Transformer architecture showing attention weights on MRI and pathology regions
+
+MODULE 4: Clinical Validation (Orange theme)
+- Left: Multi-center retrospective validation (hospital icons, chart)
+- Right: Prospective clinical testing (doctor, patient, real-time monitoring)
+- Visual: Checkmarks and validation metrics
+
+BOTTOM SECTION - RESEARCH OUTCOMES (Right side, green/success theme):
+Title: "Paradigm Shift & Clinical Value"
+Three outcome pillars:
+1. Precision Prognosis: Brain MRI with survival curve overlay, high accuracy metrics
+2. Clinical Decision Support: Doctor using AI interface, treatment recommendation
+3. Paradigm Evolution: Arrow from "Experience-driven" to "Semantic-aware & Causal Decision"
+Bottom banner: "From Experience-Driven to AI-Powered Precision Oncology"
+
+CONNECTING ELEMENTS:
+- Large curved arrows showing flow from Challenges → Solutions → Outcomes
+- Progress indicators: Problem (red) → Method (blue-green) → Success (green)
+- Side annotations highlighting innovation points
+
+STYLE: Professional scientific framework diagram, clean modern design with gradient flows, distinct color coding for each module (blue/semantic, green/completion, purple/prediction, orange/validation), publication-quality icons and illustrations, white background, suitable for academic paper figure 1 or graphical abstract
+
+TITLE: "Research Framework: From Methodological Bottlenecks to AI-Powered Precision Prognosis"
+SUBTITLE: "A Closed-Loop Diagnostic-Therapeutic System for GBM Multi-modal Integration"

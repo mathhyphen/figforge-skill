@@ -1,0 +1,32 @@
+Create a professional scientific research framework diagram for GBM multimodal integration study with CHINESE titles:
+
+MAIN TITLE (Top center, Chinese): "GBM多模态整合研究框架：从临床瓶颈到AI精准预后"
+
+LEFT SECTION (Red theme):
+Title: "当前挑战与临床瓶颈"
+Three challenges with icons:
+1. 跨尺度语义鸿沟 - MRI与分子数据断裂连接
+2. 异质性缺失数据 - 不完整数据矩阵
+3. 黑盒AI模型 - 带锁的AI盒子
+
+CENTER SECTION (Multi-color pipeline):
+Title: "四大研究模块"
+Four connected modules:
+1. 语义对齐 (Blue) - 医学大语言模型融合MRI+病理+分子数据
+2. 缺失补全 (Green) - Rectified Flow生成虚拟活检数据
+3. 可解释预测 (Purple) - 跨模态Transformer注意力机制
+4. 临床验证 (Orange) - 多中心回顾性+前瞻性测试
+
+RIGHT SECTION (Green theme):
+Title: "研究产出与价值"
+Three outcomes:
+1. 精准预后 - 靶心与生存曲线
+2. 临床决策支持 - 医生AI交互界面
+3. 范式转变 - 从经验驱动到AI赋能
+
+BOTTOM BANNER (Purple):
+"从经验驱动诊疗 → 语义感知与因果决策的AI精准肿瘤学"
+
+Style: Professional scientific illustration, clean modern design, flat vector icons, distinct color coding, white background, publication quality for academic paper in Chinese journal
+
+Note: All main titles and labels should be in Chinese characters, professional medical research aesthetic

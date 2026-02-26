@@ -1,0 +1,41 @@
+# Fig 3: Multi-modal Data Integration Framework
+# 研究背景：多模态数据层次关系图
+
+MODULE: hierarchical_diagram
+
+STYLE: scientific, layered, clean
+
+TITLE: "Multi-modal Data Integration: From Macro to Micro"
+
+CONTENT:
+Three layers from top to bottom:
+
+Layer 1 - Macro (Anatomy):
+- Advanced Imaging: MRI (T1/T2/FLAIR), PET
+- Macro Phenotypes: Tumor morphology, texture, edema, necrosis
+- Vascular density, metabolism visualization
+
+Layer 2 - Meso (Cellular):
+- Histopathology: H&E images, IHC markers
+- Cellular Features: Cell density, proliferation, infiltration
+- Tissue architecture patterns
+
+Layer 3 - Micro (Molecular):
+- Genomics: TERT promoter, EGFR amplification
+- Epigenetics: MGMT methylation
+- Transcriptomics: Gene expression, scRNA-seq
+
+Connecting arrows showing:
+- Gene mutations → Signal abnormalities → Cellular phenotypes
+- Cellular changes → Tissue architecture → Macro imaging features
+- Bidirectional influence between layers
+
+Key insight: Multi-modal integration bridges anatomy-cellular-molecular
+
+COLOR_SCHEME: 
+- Macro layer: blue
+- Cellular layer: green  
+- Molecular layer: red/purple
+- Connections: gradient arrows
+
+OUTPUT: multimodal_hierarchy.png
