@@ -182,8 +182,6 @@ figforge/
 │   └── prompts/
 │       └── step2_figure_generation.txt
 ├── examples/                  # Example inputs
-│   ├── optical_simulation_framework.txt
-│   └── livesearchbench.txt
 ├── outputs/                   # Generated figures (created automatically)
 ├── SKILL.md                   # OpenClaw skill definition
 ├── README.md                  # This file
