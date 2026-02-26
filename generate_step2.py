@@ -15,7 +15,12 @@ full_prompt = template.replace('{module_list}', module_list)
 
 print("Step 2: Generating figure using gemini-3-pro-image-preview...")
 
-client = genai.Client(api_key='AIzaSyAgDSH-3h6reUvVJ9cxVn2_FQ_DA3LnSdg')
+# 从环境变量读取 API key
+api_key = os.environ.get('GEMINI_API_KEY')
+if not api_key:
+    raise ValueError("GEMINI_API_KEY environment variable not set")
+
+client = genai.Client(api_key=api_key)
 
 response = client.models.generate_content(
     model='gemini-3-pro-image-preview',
@@ -33,3 +38,4 @@ for part in response.candidates[0].content.parts:
 else:
     print("No image in response")
     print(response.text[:500] if response.text else "Empty response")
+

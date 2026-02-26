@@ -3,7 +3,12 @@ from google import genai
 from google.genai import types
 
 # ç›´æ¥ç”Ÿæˆå›¾ç‰‡
-client = genai.Client(api_key='AIzaSyAgDSH-3h6reUvVJ9cxVn2_FQ_DA3LnSdg')
+# ´Ó»·¾³±äÁ¿¶ÁÈ¡ API key
+api_key = os.environ.get('GEMINI_API_KEY')
+if not api_key:
+    raise ValueError("GEMINI_API_KEY environment variable not set")
+
+client = genai.Client(api_key=api_key)
 
 prompt = """Create a professional scientific research framework diagram for a GBM (glioblastoma) study.
 
@@ -48,8 +53,9 @@ for part in response.candidates[0].content.parts:
     if part.inline_data is not None:
         with open('D:/apps/figforge/outputs/gbm_framework_direct.png', 'wb') as f:
             f.write(part.inline_data.data)
-        print("âœ… Image saved: gbm_framework_direct.png")
+        print("âœ?Image saved: gbm_framework_direct.png")
         break
 else:
     print("No image generated")
     print(response.text)
+
