@@ -116,7 +116,7 @@ class FigForgeGenerator:
         self.gemini_client = genai.Client(api_key=gemini_api_key)
         self.image_model = image_model or os.getenv(
             "IMAGE_MODEL", 
-            "gemini-2.0-flash-exp-image-generation"
+            "gemini-3.1-flash-image-preview"
         )
         self.output_dir = Path(os.getenv("OUTPUT_DIR", "outputs"))
         self.output_dir.mkdir(exist_ok=True)

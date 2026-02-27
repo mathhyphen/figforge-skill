@@ -151,7 +151,7 @@ python scripts/run_complete.py \
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `GEMINI_API_KEY` | ✅ Yes | - | Google Gemini API key |
-| `IMAGE_MODEL` | ❌ No | `gemini-2.0-flash-exp-image-generation` | Image generation model |
+| `IMAGE_MODEL` | ❌ No | `gemini-3.1-flash-image-preview` | Image generation model |
 | `OUTPUT_DIR` | ❌ No | `outputs` | Output directory |
 
 ## 📁 Directory Structure
