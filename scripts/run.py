@@ -194,10 +194,7 @@ class FigForgeGenerator:
             raise ValueError("GEMINI_API_KEY environment variable required")
         
         self.gemini_client = genai.Client(api_key=gemini_api_key)
-        self.image_model = image_model or os.getenv(
-            "IMAGE_MODEL", 
-            "gemini-3.1-flash-image-preview"
-        )
+        self.image_model = image_model or "gemini-3.1-flash-image-preview"
         self.output_dir = Path(os.getenv("OUTPUT_DIR", "outputs"))
         self.output_dir.mkdir(exist_ok=True)
         
@@ -312,7 +309,7 @@ Generate the figure now."""
         # Show cost estimate
         if show_cost:
             print("\n" + "-"*60)
-            print("💰 COST ESTIMATE")
+            print("COST ESTIMATE")
             print("-"*60)
             cost_info = self.estimate_generation_cost(resolution="1K", num_images=1)
             print(self.cost_estimator.format_cost(cost_info))
@@ -493,11 +490,11 @@ def main(
         )
         
         print(f"\n{'='*60}")
-        print(f"✅ Success! Figure generated: {figure_path}")
+        print(f"[OK] Success! Figure generated: {figure_path}")
         
         # Show final cost
         cost_info = generator.estimate_generation_cost(resolution="1K", num_images=1)
-        print(f"💰 Actual cost: ~${cost_info['cost_per_image']:.4f}")
+        print(f"[*] Actual cost: ~${cost_info['cost_per_image']:.4f}")
         print(f"{'='*60}")
         
     except Exception as e:
