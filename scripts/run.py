@@ -100,6 +100,86 @@ class StyleExtractor:
         }
 
 
+class CostEstimator:
+    """Estimate API costs for image generation"""
+    
+    # Pricing data from Google AI (per 1M tokens)
+    PRICING = {
+        "gemini-3.1-flash-image-preview": {
+            "input_per_1m": 0.25,      # $0.25 per 1M input tokens
+            "output_per_1m": 60.00,    # $60 per 1M output tokens (images)
+            "tokens_per_1k_image": 1120,  # 1K (1024x1024) image = 1120 tokens
+            "tokens_per_2k_image": 1680,  # 2K image = 1680 tokens
+            "tokens_per_4k_image": 2520,  # 4K image = 2520 tokens
+        },
+        "gemini-3-pro-image-preview": {
+            "input_per_1m": 2.00,      # $2.00 per 1M input tokens
+            "output_per_1m": 120.00,   # $120 per 1M output tokens (images)
+            "tokens_per_1k_image": 1120,  # 1K/2K image = 1120 tokens
+            "tokens_per_4k_image": 2000,  # 4K image = 2000 tokens
+        },
+        "gemini-2.0-flash-exp-image-generation": {
+            "input_per_1m": 0.10,
+            "output_per_1m": 30.00,
+            "tokens_per_image": 1290,  # ~$0.039 per image
+        },
+    }
+    
+    DEFAULT_RESOLUTION = "1K"  # Default estimate resolution
+    
+    @classmethod
+    def estimate_cost(cls, model: str, resolution: str = "1K", num_images: int = 1) -> dict:
+        """
+        Estimate cost for image generation
+        
+        Args:
+            model: Model name
+            resolution: Image resolution (512, 1K, 2K, 4K)
+            num_images: Number of images to generate
+        
+        Returns:
+            dict with cost breakdown
+        """
+        pricing = cls.PRICING.get(model, cls.PRICING["gemini-3.1-flash-image-preview"])
+        
+        # Get tokens per image based on resolution
+        if resolution in ["512", "0.5K"]:
+            tokens_per_image = pricing.get("tokens_per_512_image", 747)
+        elif resolution in ["1K", "1024", "1k"]:
+            tokens_per_image = pricing.get("tokens_per_1k_image", 1120)
+        elif resolution in ["2K", "2048", "2k"]:
+            tokens_per_image = pricing.get("tokens_per_2k_image", 1680)
+        elif resolution in ["4K", "4096", "4k"]:
+            tokens_per_image = pricing.get("tokens_per_4k_image", 2520)
+        else:
+            tokens_per_image = pricing.get("tokens_per_image", 1120)
+        
+        # Calculate costs (assume input is negligible for image generation)
+        output_cost_per_image = (tokens_per_image / 1_000_000) * pricing["output_per_1m"]
+        total_cost = output_cost_per_image * num_images
+        
+        return {
+            "model": model,
+            "resolution": resolution,
+            "num_images": num_images,
+            "tokens_per_image": tokens_per_image,
+            "cost_per_image": output_cost_per_image,
+            "total_cost": total_cost,
+            "currency": "USD"
+        }
+    
+    @classmethod
+    def format_cost(cls, cost_info: dict) -> str:
+        """Format cost information for display"""
+        lines = [
+            f"  Model: {cost_info['model']}",
+            f"  Resolution: {cost_info['resolution']}",
+            f"  Estimated cost per image: ${cost_info['cost_per_image']:.4f}",
+            f"  Total estimated cost: ${cost_info['total_cost']:.4f}",
+        ]
+        return "\n".join(lines)
+
+
 class FigForgeGenerator:
     """Enhanced figure generator with style transfer support"""
     
@@ -124,6 +204,13 @@ class FigForgeGenerator:
         # Load templates
         self.prompts_dir = Path(__file__).parent / "prompts"
         self.base_template = self._load_template("step2_figure_generation.txt")
+        
+        # Initialize cost estimator
+        self.cost_estimator = CostEstimator()
+    
+    def estimate_generation_cost(self, resolution: str = "1K", num_images: int = 1) -> dict:
+        """Estimate cost for current model"""
+        return self.cost_estimator.estimate_cost(self.image_model, resolution, num_images)
     
     def _load_template(self, filename: str) -> str:
         """Load prompt template"""
@@ -208,7 +295,8 @@ Generate the figure now."""
         output_path: Optional[Path] = None,
         input_filename: Optional[str] = None,
         reference_image: Optional[Path] = None,
-        blend_mode: bool = False
+        blend_mode: bool = False,
+        show_cost: bool = True
     ) -> Path:
         """
         Generate figure with optional style transfer
@@ -219,7 +307,17 @@ Generate the figure now."""
             input_filename: Original input filename
             reference_image: Path to reference image for style transfer
             blend_mode: If True, blend reference style with academic standards
+            show_cost: If True, display cost estimate
         """
+        # Show cost estimate
+        if show_cost:
+            print("\n" + "-"*60)
+            print("💰 COST ESTIMATE")
+            print("-"*60)
+            cost_info = self.estimate_generation_cost(resolution="1K", num_images=1)
+            print(self.cost_estimator.format_cost(cost_info))
+            print("-"*60 + "\n")
+        
         # Determine output path
         if output_path is None:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -395,7 +493,11 @@ def main(
         )
         
         print(f"\n{'='*60}")
-        print(f"Success! Figure generated: {figure_path}")
+        print(f"✅ Success! Figure generated: {figure_path}")
+        
+        # Show final cost
+        cost_info = generator.estimate_generation_cost(resolution="1K", num_images=1)
+        print(f"💰 Actual cost: ~${cost_info['cost_per_image']:.4f}")
         print(f"{'='*60}")
         
     except Exception as e:
